@@ -28,11 +28,12 @@ public class ConsumerThread extends Thread {
 
         this.protocol = protocol;
         props.put("bootstrap.servers", "localhost:9092");
-        props.put("group.id", "dcdb");
+        props.put("group.id", "dcdb-1");
         props.put("value.deserializer", "utils.MessageDeserializer");
+        //props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");
-        props.put("auto.offset.reset", "earliest");
+        props.put("auto.offset.reset", "latest");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         consumer = new KafkaConsumer<>(props);
         consumer.subscribe(Arrays.asList("dcdb"));
@@ -43,7 +44,7 @@ public class ConsumerThread extends Thread {
         while (true) {
             ConsumerRecords<String, Message> records = consumer.poll(Duration.ofMillis(10));
             for (ConsumerRecord<String, Message> record : records) {
-                //System.err.println(record.value().toString());
+                //System.out.println(record.value().toString());
                 protocol.onReceiptOf(record.value(), producer);
             }
         }

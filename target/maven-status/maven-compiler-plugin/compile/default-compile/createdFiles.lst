@@ -1,1 +1,12 @@
 com\mycompany\simulator_5gplus\Simulator_5gplus.class
+DCDB\MainDCDB.class
+utils\MessageDeserializer.class
+DCDB\AMF_selection.class
+utils\Message.class
+DCDB\Protocol.class
+DCDB\ConsumerThread.class
+SRAN\Initialisation.class
+SRAN\MainSRAN.class
+utils\JsonPOJODeserializer.class
+utils\JsonPOJOSerializer.class
+DCDB\Initialisation.class

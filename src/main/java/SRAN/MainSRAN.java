@@ -24,8 +24,10 @@ public class MainSRAN {
         prop.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         prop.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         prop.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonPOJOSerializer.class.getName());
-        prop.put(ProducerConfig.ACKS_CONFIG, "0");
+        //prop.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        //prop.put(ProducerConfig.ACKS_CONFIG, "0");
         Producer producer = new KafkaProducer<>(prop);
+        
 
         Initialisation init_sran = new Initialisation(producer);
         init_sran.start();

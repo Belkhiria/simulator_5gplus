@@ -26,12 +26,14 @@ public class Initialisation extends Thread {
                 new Message("sran", "dcdb", "handover_required", new ArrayList<>()));
 
         producer.send(rec);
+        producer.flush();
+        //producer.close();
     }
 
     @Override
     public void run() {
         try {
-            Thread.sleep(10000);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
         }
 
