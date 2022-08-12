@@ -8,7 +8,6 @@ package DCDB;
  *
  * @author ddmm8625
  */
-
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
@@ -16,44 +15,38 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.Producer;
-
-
+import utils.Message;
 
 public class ConsumerThread extends Thread {
 
-    private final MainDCDB dcdb;
-    private final Producer producer;
     private final Protocol protocol;
     Properties props = new Properties();
-    KafkaConsumer<String, String> consumer;
+    KafkaConsumer<String, Message> consumer;
+    Producer producer;
 
-    public ConsumerThread(MainDCDB dcdb, Producer producer, Protocol protocol) {
-        
-        this.dcdb = dcdb;
-        this.producer = producer;
+    public ConsumerThread(Protocol protocol, Producer producer) {
+
         this.protocol = protocol;
         props.put("bootstrap.servers", "localhost:9092");
-        props.put("group.id", "consumer_dcdb");
-        props.put("value.deserializer", "myapps.MessageGMEDeserializer");
+        props.put("group.id", "dcdb");
+        props.put("value.deserializer", "utils.MessageDeserializer");
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");
         props.put("auto.offset.reset", "earliest");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("max.poll.records", "1");
         consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Arrays.asList("consumer_dcdb"));
+        consumer.subscribe(Arrays.asList("dcdb"));
     }
-    
+
     @Override
     public void run() {
         while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10));
-            for (ConsumerRecord<String, String> record : records) {
+            ConsumerRecords<String, Message> records = consumer.poll(Duration.ofMillis(10));
+            for (ConsumerRecord<String, Message> record : records) {
                 //System.err.println(record.value().toString());
-                protocol.onReceiptOf(record.value(), dcdb, producer);
+                protocol.onReceiptOf(record.value(), producer);
             }
         }
     }
-
 
 }

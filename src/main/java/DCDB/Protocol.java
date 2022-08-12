@@ -6,6 +6,7 @@ package DCDB;
 
 import DCDB.MainDCDB;
 import org.apache.kafka.clients.producer.Producer;
+import utils.Message;
 
 /**
  *
@@ -13,8 +14,9 @@ import org.apache.kafka.clients.producer.Producer;
  */
 public class Protocol {
 
-    public void onReceiptOf(String value, MainDCDB dcdb, Producer producer) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void onReceiptOf(Message value, Producer producer) {
+        //throw new UnsupportedOperationException("Not supported yet."); 
+        System.out.println(value.toString());
     }
-    
+
 }

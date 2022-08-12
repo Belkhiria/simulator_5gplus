@@ -11,7 +11,7 @@ import java.util.List;
  * @author ddmm8625
  */
 public class Message {
-    
+
     private String from;
     private String to;
     private String type;
@@ -58,8 +58,10 @@ public class Message {
     public void setValue(List<String> value) {
         this.value = value;
     }
-    
-    
- 
-    
+
+    @Override
+    public String toString() {
+        return "Message{" + "from=" + from + ", to=" + to + ", type=" + type + ", value=" + value + '}';
+    }
+
 }

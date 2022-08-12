@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DCDB;
+package SRAN;
 
 import java.util.Properties;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -14,10 +14,12 @@ import utils.JsonPOJOSerializer;
  *
  * @author ddmm8625
  */
-public class MainDCDB {
+public class MainSRAN {
+
+    public static Properties props = new Properties();
 
     public static void main(String[] args) {
-        Protocol protocol = new Protocol();
+
         Properties prop = new Properties();
         prop.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         prop.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
@@ -25,8 +27,8 @@ public class MainDCDB {
         prop.put(ProducerConfig.ACKS_CONFIG, "0");
         Producer producer = new KafkaProducer<>(prop);
 
-        ConsumerThread consumer = new ConsumerThread(protocol, producer);
-        consumer.start();
+        Initialisation init_sran = new Initialisation(producer);
+        init_sran.start();
 
     }
 }
